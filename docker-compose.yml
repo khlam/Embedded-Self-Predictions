@@ -5,4 +5,8 @@ services:
     build: .
     volumes:
         - .:/app
-    command: tail -f /dev/null
+    #command: python3 CP_ESP.py eval
+    ports:
+      - "6006:6006"
+    command: tensorboard --bind_all --port=6006 --logdir ./Cartpole_summary/CartPole
+    tty: true
