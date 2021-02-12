@@ -148,8 +148,8 @@ class feature_q_model():
         torch.save(self.q_model.state_dict(), path + "q_model")
             
     def load(self, path):
-        self.feautre_model.load_state_dict(torch.load(path + "feature"))
-        self.q_model.load_state_dict(torch.load(path + "q_model"))
+        self.feautre_model.load_state_dict(torch.load(path + "feature", map_location=torch.device('cuda' if torch.cuda.is_available() else 'cpu')))
+        self.q_model.load_state_dict(torch.load(path + "q_model", map_location=torch.device('cuda' if torch.cuda.is_available() else 'cpu')))
         
        
     def eval_mode(self):

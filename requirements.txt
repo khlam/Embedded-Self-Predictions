@@ -1,8 +1,7 @@
 torch
 torchvision
-gym[all]
-pysc2==2.0.2
-numpy
+numpy==1.19.2
+gym
 visdom
 tensorflow
 tensorboardX
@@ -10,8 +9,8 @@ openpyxl
 baselines
 pandas
 pyyaml
+matplotlib
 coverage
 imutil
 tqdm
-scaii>=0.2.0
-
+pillow==7.2.0

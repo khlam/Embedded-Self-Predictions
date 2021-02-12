@@ -1,0 +1,7 @@
+*.pyc
+*.tfevents.*
+*_summary/
+CartPole_ESP_exp/
+__pycache__/
+results.txt
+results_GVFs_loss.txt

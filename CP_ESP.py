@@ -19,7 +19,7 @@ from collections import deque
 
 import io
 import base64
-from IPython.display import HTML
+#from IPython.display import HTML
 
 from models.feature_q_model import feature_q_model
 from memory.memory import ReplayBuffer, ReplayBuffer_decom
@@ -32,8 +32,13 @@ import matplotlib as mpl
 from datetime import datetime
 # get_ipython().run_line_magic('matplotlib', 'inline')
 
-FloatTensor = torch.cuda.FloatTensor
-LongTensor = torch.cuda.LongTensor
+if (torch.cuda.is_available() == False):
+    device = torch.device("cpu")
+else:
+    device = torch.device("gpu")
+FloatTensor = torch.cuda.FloatTensor if torch.cuda.is_available() else torch.FloatTensor
+LongTensor = torch.cuda.LongTensor if torch.cuda.is_available() else torch.LongTensor
+
 Writer = SummaryWriter(log_dir="CartPole_summary")
 mpl.style.use('bmh')
 plt.rcParams["font.family"] = "Arial"#"Helvetica"
@@ -538,10 +543,10 @@ class ESP_agent(object):
         f = open(result_file_GVFs_loss, "a+")
         f.write(str(avg_GVFs_loss) + "\n")
         f.close()
-        if avg_reward >= self.best_reward:
-            self.best_reward = avg_reward
-            self.save_model()
-            print("save")
+        #if avg_reward >= self.best_reward:
+        #    self.best_reward = avg_reward
+        #    self.save_model()
+        #    print("save")
         Writer.add_scalars(main_tag='CartPole/GQF discrete',
                                 tag_scalar_dict = {'GQF discrete 1':avg_reward}, 
 #                                 scalar_value=,
