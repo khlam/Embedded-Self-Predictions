@@ -317,7 +317,6 @@ class ESP_agent(object):
         self.state_len = len(state)
         input_len = self.state_len * self.privous_state + action_space
         output_len = 1
-        
         self.action_vector = self.get_action_vector()
         self.eval_model = feature_q_model(input_len, self.decom_reward_len, output_len, learning_rate = hyper_params['learning_rate'])
         self.target_model = feature_q_model(input_len, self.decom_reward_len, output_len, learning_rate = hyper_params['learning_rate'])
@@ -587,8 +586,8 @@ class ESP_agent(object):
 #             q_vs.append(q_v.item())
             state, reward, done, _ = self.env.step(action)
             
-            all_frames.append(env.render(mode='rgb_array'))
-            
+            #all_frames.append(env.render(mode='rgb_array'))
+            all_frames.append(None)
             all_states.append(state.copy())
         for s in states:
             all_states.append(s)
@@ -600,7 +599,6 @@ class ESP_agent(object):
         v_features, q_value = self.eval_model.predict_batch(com_examples)
         q_value = q_value.view((-1, self.action_space))
         v_features = v_features.view((-1, self.action_space, self.decom_reward_len))
-        
         q_best_values, predict_best_action = q_value.max(1)
         q_worst_values, predict_worst_action = q_value.min(1)
         
@@ -673,13 +671,13 @@ class ESP_agent(object):
     def differenc_vector_2(self, model, target, baseline, verbose = True, iteration = 100, show_image = True):
         t_feature, t_frame, t_value = target
         b_feature, b_frame, b_value = baseline
-        
+
         if verbose or show_image:
             plt.clf()
             print("target value: {}".format(t_value.item()))
             print("baseline value: {}".format(b_value.item()))
             self.exp_count += 1
-            plt.imshow(t_frame)
+            #plt.imshow(t_frame)
             plt.axis('off')
             plt.savefig("{}/game_state-{}.png".format(result_floder_exp, self.exp_count))
         (msx_idx, msx_value), intergated_grad = self.intergated_gradients(model, t_feature, baseline = b_feature, verbose = verbose, iteration = iteration)
